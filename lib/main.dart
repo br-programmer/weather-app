@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+import 'package:weather/data/datasource/api_repository_impl.dart';
+import 'package:weather/presentation/home/home_bloc.dart';
 import 'package:weather/presentation/home/home_screen.dart';
 
 void main() async {
@@ -24,10 +27,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'WeatherApp',
-      home: HomeScreen(),
+    return ChangeNotifierProvider(
+      create: (_) => HomeBLoC(repository: ApiRepositoryImpl()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'WeatherApp',
+        home: HomeScreen(),
+      ),
     );
   }
 }
