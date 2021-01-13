@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/data/datasource/api_repository_impl.dart';
+import 'package:weather/presentation/common/app_colors.dart';
 import 'package:weather/presentation/home/home_bloc.dart';
 import 'package:weather/presentation/home/home_screen.dart';
 
@@ -31,6 +32,12 @@ class _MyAppState extends State<MyApp> {
       create: (_) => HomeBLoC(repository: ApiRepositoryImpl()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          appBarTheme: AppBarTheme(elevation: 0.0),
+          scaffoldBackgroundColor: Colors.white,
+          cursorColor: AppColors.primaryColor,
+        ),
         title: 'WeatherApp',
         home: HomeScreen(),
       ),

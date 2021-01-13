@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/presentation/common/custom_search_delegate.dart';
 
 class MyCustomAppBar extends StatelessWidget {
   const MyCustomAppBar({Key key}) : super(key: key);
@@ -13,7 +14,10 @@ class MyCustomAppBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.add, color: Colors.white),
+              GestureDetector(
+                onTap: () => showSearch(context: context, delegate: CustomSearchDelegate()),
+                child: Icon(Icons.add, color: Colors.white),
+              ),
               Icon(Icons.more_vert, color: Colors.white),
             ],
           ),
