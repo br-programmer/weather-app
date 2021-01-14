@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather/presentation/home/widgets/current_temperature.dart';
 import 'package:weather/presentation/home/widgets/widgets.dart'
     show CopyRightData, PageIndicator, PageViewCities, WeatherStateBackground;
 
@@ -13,6 +14,7 @@ class HomeWeathers extends StatelessWidget {
       children: [
         const WeatherStateBackground(),
         const PageIndicator(),
+        const CurrentTemperature(),
         const PageViewCities(),
         const CopyRightData(),
       ],
