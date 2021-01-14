@@ -32,11 +32,12 @@ class _MyAppState extends State<MyApp> {
       create: (_) => HomeBLoC(repository: ApiRepositoryImpl()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.white,
+        theme: ThemeData.light().copyWith(
+          primaryColor: AppColors.primaryColor,
           appBarTheme: AppBarTheme(elevation: 0.0),
           scaffoldBackgroundColor: Colors.white,
-          cursorColor: AppColors.primaryColor,
+          hintColor: Colors.white30,
+          textTheme: TextTheme(subtitle1: TextStyle(color: Colors.white)),
         ),
         title: 'WeatherApp',
         home: HomeScreen(),

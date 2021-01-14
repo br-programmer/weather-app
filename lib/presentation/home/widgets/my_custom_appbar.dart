@@ -21,6 +21,7 @@ class MyCustomAppBar extends StatelessWidget {
       child: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
+          height: kToolbarHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

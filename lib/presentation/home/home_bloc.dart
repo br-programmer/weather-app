@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:weather/domain/model/city.dart';
 import 'package:weather/domain/repository/api_repository.dart';
@@ -14,6 +15,10 @@ class HomeBLoC extends ChangeNotifier {
   ValueNotifier<List<City>> get searchCities => _searchCities;
   ValueNotifier<bool> _loading;
   ValueNotifier<bool> get loading => _loading;
+  ValueNotifier<int> _currentPage;
+  ValueNotifier<int> get currentPage => this._currentPage;
+  PageController _controller;
+  PageController get controller => _controller;
 
   HomeBLoC({@required this.repository}) {
     _init();
@@ -23,6 +28,8 @@ class HomeBLoC extends ChangeNotifier {
     _myCities = ValueNotifier([]);
     _searchCities = ValueNotifier([]);
     _loading = ValueNotifier(false);
+    _currentPage = ValueNotifier(0);
+    _controller = PageController();
     _debounce = Debounce(duration: const Duration(milliseconds: 700));
   }
 
@@ -57,4 +64,6 @@ class HomeBLoC extends ChangeNotifier {
     }
     _loading.value = false;
   }
+
+  void setPage(int page) => _currentPage.value = page;
 }

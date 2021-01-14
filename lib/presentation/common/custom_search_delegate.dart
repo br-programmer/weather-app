@@ -46,13 +46,17 @@ class CustomSearchDelegate extends SearchDelegate<City> {
         return ListView.builder(
           itemCount: bloc.searchCities.value.length,
           itemBuilder: (_, int index) {
+            final city = bloc.searchCities.value[index];
             return ListTile(
-              title: Text('${bloc.searchCities.value[index].title}'),
-              subtitle: Text('${bloc.searchCities.value[index].type}'),
-              onTap: () {
-                bloc.addMyCity(bloc.searchCities.value[index]);
-                close(context, null);
-              },
+              title: Text(
+                '${city.title}',
+                style: Theme.of(context).textTheme.subtitle2.copyWith(color: Colors.black),
+              ),
+              subtitle: Text(
+                '${city.type}',
+                style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black54),
+              ),
+              onTap: () => close(context, city),
             );
           },
         );
@@ -68,8 +72,14 @@ class CustomSearchDelegate extends SearchDelegate<City> {
       itemCount: myList.length,
       itemBuilder: (_, int index) {
         return ListTile(
-          title: Text('${bloc.myCities.value[index].title}'),
-          subtitle: Text('${bloc.myCities.value[index].type}'),
+          title: Text(
+            '${bloc.myCities.value[index].title}',
+            style: Theme.of(context).textTheme.subtitle2.copyWith(color: Colors.black),
+          ),
+          subtitle: Text(
+            '${bloc.myCities.value[index].type}',
+            style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black54),
+          ),
           leading: Icon(Icons.history),
         );
       },
