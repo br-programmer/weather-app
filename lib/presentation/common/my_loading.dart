@@ -32,7 +32,7 @@ class _MyLoadingState extends State<MyLoading> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Center(
       child: FractionallySizedBox(
-        widthFactor: .09,
+        widthFactor: .1,
         child: AnimatedBuilder(
           animation: _animation,
           child: Image.asset('assets/brand/loading.png'),

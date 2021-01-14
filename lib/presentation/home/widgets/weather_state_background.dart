@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather/presentation/home/home_bloc.dart';
 
 class WeatherStateBackground extends StatefulWidget {
   const WeatherStateBackground({Key key}) : super(key: key);
@@ -28,13 +30,22 @@ class _WeatherStateBackgroundState extends State<WeatherStateBackground> with Si
 
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of<HomeBLoC>(context, listen: false);
     return AnimatedBuilder(
-      animation: _controller,
+      animation: Listenable.merge([_controller, bloc.currentPage]),
       builder: (_, __) {
+        final weather = bloc.myCities.value[bloc.currentPage.value].weathers.first;
         return Positioned.fill(
           left: _movement * _controller.value,
           right: _movement * (1 - _controller.value),
-          child: Image.asset('assets/weather_state/t.jpg', fit: BoxFit.cover),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            child: Image.asset(
+              'assets/weather_state/${weather.weatherStateAbbr}.jpg',
+              key: ValueKey(weather.weatherStateAbbr),
+              fit: BoxFit.cover,
+            ),
+          ),
         );
       },
     );

@@ -37,10 +37,10 @@ class CustomSearchDelegate extends SearchDelegate<City> {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
     bloc.onListenerQuery(query);
     return AnimatedBuilder(
-      animation: Listenable.merge([bloc.loading, bloc.searchCities]),
+      animation: Listenable.merge([bloc.loadingCity, bloc.searchCities]),
       child: const MyLoading(),
       builder: (_, child) {
-        if (bloc.loading.value) {
+        if (bloc.loadingCity.value) {
           return child;
         }
         return ListView.builder(

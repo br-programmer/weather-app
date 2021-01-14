@@ -13,8 +13,8 @@ class HomeWeathers extends StatelessWidget {
       children: [
         const WeatherStateBackground(),
         const PageIndicator(),
-        const CopyRightData(),
         const PageViewCities(),
+        const CopyRightData(),
       ],
     );
   }

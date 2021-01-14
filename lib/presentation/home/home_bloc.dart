@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:weather/domain/model/city.dart';
 import 'package:weather/domain/repository/api_repository.dart';
 import 'package:weather/domain/request/city_request.dart';
+import 'package:weather/domain/request/weathers_request.dart';
 import 'package:weather/presentation/common/debounce.dart';
 
 class HomeBLoC extends ChangeNotifier {
@@ -13,8 +14,10 @@ class HomeBLoC extends ChangeNotifier {
   ValueNotifier<List<City>> get myCities => _myCities;
   ValueNotifier<List<City>> _searchCities;
   ValueNotifier<List<City>> get searchCities => _searchCities;
-  ValueNotifier<bool> _loading;
-  ValueNotifier<bool> get loading => _loading;
+  ValueNotifier<bool> _loadingCity;
+  ValueNotifier<bool> get loadingCity => _loadingCity;
+  ValueNotifier<bool> _loadingWeathers;
+  ValueNotifier<bool> get loadingWeathers => _loadingWeathers;
   ValueNotifier<int> _currentPage;
   ValueNotifier<int> get currentPage => this._currentPage;
   PageController _controller;
@@ -27,7 +30,8 @@ class HomeBLoC extends ChangeNotifier {
   void _init() {
     _myCities = ValueNotifier([]);
     _searchCities = ValueNotifier([]);
-    _loading = ValueNotifier(false);
+    _loadingCity = ValueNotifier(false);
+    _loadingWeathers = ValueNotifier(false);
     _currentPage = ValueNotifier(0);
     _controller = PageController();
     _debounce = Debounce(duration: const Duration(milliseconds: 700));
@@ -42,19 +46,26 @@ class HomeBLoC extends ChangeNotifier {
 
   void onListenerQuery(String query) {
     if (query.trim().length >= 3) {
-      _debounce.cancel();
-      _loading.value = true;
-      _debounce.create(() => _search(query));
+      _debounce?.cancel();
+      repository?.cancel();
+      _loadingCity.value = true;
+      _debounce?.create(() => _search(query));
     } else {
-      _debounce.cancel();
-      _loading.value = false;
+      _debounce?.cancel();
+      repository?.cancel();
+      _loadingCity.value = false;
     }
   }
 
-  void addMyCity(City city) {
-    final tmp = List<City>.from(_myCities.value);
-    tmp.add(city);
-    _myCities.value = tmp;
+  Future<void> addMyCity(City city) async {
+    _loadingWeathers.value = true;
+    final data = await repository.getWeathers(WeathersRequest(city: city));
+    if (data != null) {
+      final tmp = List<City>.from(_myCities.value);
+      tmp.add(data.city);
+      _myCities.value = tmp;
+    }
+    _loadingWeathers.value = false;
   }
 
   Future<void> _search(String query) async {
@@ -62,7 +73,7 @@ class HomeBLoC extends ChangeNotifier {
     if (data != null) {
       _searchCities.value = data.cities;
     }
-    _loading.value = false;
+    _loadingCity.value = false;
   }
 
   void setPage(int page) => _currentPage.value = page;

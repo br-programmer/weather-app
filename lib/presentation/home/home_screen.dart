@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/domain/model/city.dart';
+import 'package:weather/presentation/common/my_loading.dart';
 import 'package:weather/presentation/home/home_bloc.dart';
 import 'package:weather/presentation/home/widgets/home_weathers.dart';
 import 'package:weather/presentation/home/widgets/widgets.dart';
@@ -13,8 +14,22 @@ class HomeScreen extends StatelessWidget {
         children: [
           const _Body(),
           const MyCustomAppBar(),
+          const _LoadingWeathers(),
         ],
       ),
+    );
+  }
+}
+
+class _LoadingWeathers extends StatelessWidget {
+  const _LoadingWeathers({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final bloc = Provider.of<HomeBLoC>(context, listen: false);
+    return ValueListenableBuilder<bool>(
+      valueListenable: bloc.loadingWeathers,
+      child: Container(color: Colors.transparent, child: const MyLoading()),
+      builder: (_, value, child) => value ? child : const SizedBox.shrink(),
     );
   }
 }
