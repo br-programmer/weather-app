@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather/domain/model/city.dart';
 import 'package:weather/presentation/common/my_loading.dart';
 import 'package:weather/presentation/home/home_bloc.dart';
 
-class CustomSearchDelegate extends SearchDelegate {
+class CustomSearchDelegate extends SearchDelegate<City> {
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -36,18 +37,22 @@ class CustomSearchDelegate extends SearchDelegate {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
     bloc.onListenerQuery(query);
     return AnimatedBuilder(
-      animation: Listenable.merge([bloc.loading, bloc.cities]),
+      animation: Listenable.merge([bloc.loading, bloc.searchCities]),
       child: const MyLoading(),
       builder: (_, child) {
         if (bloc.loading.value) {
           return child;
         }
         return ListView.builder(
-          itemCount: bloc.cities.value.length,
+          itemCount: bloc.searchCities.value.length,
           itemBuilder: (_, int index) {
             return ListTile(
-              title: Text('${bloc.cities.value[index].id}'),
-              subtitle: Text(bloc.cities.value[index].title),
+              title: Text('${bloc.searchCities.value[index].title}'),
+              subtitle: Text('${bloc.searchCities.value[index].type}'),
+              onTap: () {
+                bloc.addMyCity(bloc.searchCities.value[index]);
+                close(context, null);
+              },
             );
           },
         );
@@ -58,13 +63,14 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
-    final myList = bloc.cities.value.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
+    final myList = bloc.myCities.value.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
     return ListView.builder(
       itemCount: myList.length,
       itemBuilder: (_, int index) {
         return ListTile(
-          title: Text('${myList[index].id}'),
-          subtitle: Text(myList[index].title),
+          title: Text('${bloc.myCities.value[index].title}'),
+          subtitle: Text('${bloc.myCities.value[index].type}'),
+          leading: Icon(Icons.history),
         );
       },
     );

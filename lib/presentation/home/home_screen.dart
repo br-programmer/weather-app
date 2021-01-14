@@ -26,7 +26,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
     return ValueListenableBuilder<List<City>>(
-      valueListenable: bloc.cities,
+      valueListenable: bloc.myCities,
       child: const HomeEmpty(),
       builder: (_, cities, child) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 500),

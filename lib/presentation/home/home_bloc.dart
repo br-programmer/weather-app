@@ -8,8 +8,10 @@ class HomeBLoC extends ChangeNotifier {
   final ApiRepository repository;
   Debounce _debounce;
 
-  ValueNotifier<List<City>> _cities;
-  ValueNotifier<List<City>> get cities => _cities;
+  ValueNotifier<List<City>> _myCities;
+  ValueNotifier<List<City>> get myCities => _myCities;
+  ValueNotifier<List<City>> _searchCities;
+  ValueNotifier<List<City>> get searchCities => _searchCities;
   ValueNotifier<bool> _loading;
   ValueNotifier<bool> get loading => _loading;
 
@@ -18,7 +20,8 @@ class HomeBLoC extends ChangeNotifier {
   }
 
   void _init() {
-    _cities = ValueNotifier([]);
+    _myCities = ValueNotifier([]);
+    _searchCities = ValueNotifier([]);
     _loading = ValueNotifier(false);
     _debounce = Debounce(duration: const Duration(milliseconds: 700));
   }
@@ -26,6 +29,7 @@ class HomeBLoC extends ChangeNotifier {
   @override
   void dispose() {
     _debounce?.cancel();
+    repository?.cancel();
     super.dispose();
   }
 
@@ -33,16 +37,24 @@ class HomeBLoC extends ChangeNotifier {
     if (query.trim().length >= 3) {
       _debounce.cancel();
       _loading.value = true;
-      _debounce.create(() => _searchCities(query));
+      _debounce.create(() => _search(query));
     } else {
       _debounce.cancel();
       _loading.value = false;
     }
   }
 
-  Future<void> _searchCities(String query) async {
+  void addMyCity(City city) {
+    final tmp = List<City>.from(_myCities.value);
+    tmp.add(city);
+    _myCities.value = tmp;
+  }
+
+  Future<void> _search(String query) async {
     final data = await repository.getCities(CityRequest(query: query));
-    _cities.value = data.cities;
+    if (data != null) {
+      _searchCities.value = data.cities;
+    }
     _loading.value = false;
   }
 }
