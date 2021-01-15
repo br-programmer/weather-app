@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/presentation/home/home_bloc.dart';
+import 'package:weather/presentation/home/widgets/icon_swiper_up.dart';
 
 class CurrentDetailtWeather extends StatelessWidget {
   const CurrentDetailtWeather({Key key}) : super(key: key);
@@ -14,15 +15,25 @@ class CurrentDetailtWeather extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FractionallySizedBox(
-              widthFactor: .95,
-              child: Divider(height: 0, thickness: 1, color: Colors.white.withOpacity(.3)),
-            ),
+            const IconSwiperUp(),
+            const _Divider(),
             const SizedBox(height: 20),
             const _DetailtWeather(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Divider extends StatelessWidget {
+  const _Divider({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      widthFactor: .95,
+      child: Divider(height: 0, thickness: 1, color: Colors.white.withOpacity(.3)),
     );
   }
 }
@@ -57,7 +68,7 @@ class _DetailtWeather extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _ItemDetailtWeather(title: 'Temp min', value: weather.minTemp.toStringAsFixed(2)),
+                _ItemDetailtWeather(title: 'Temp Min', value: weather.minTemp.toStringAsFixed(2)),
                 _ItemDetailtWeather(title: 'Temp Max', value: weather.maxTemp.toStringAsFixed(2)),
               ],
             ),
