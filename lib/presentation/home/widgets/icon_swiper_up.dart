@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather/presentation/home/widgets/forecast.dart';
 
 class IconSwiperUp extends StatefulWidget {
   const IconSwiperUp({Key key}) : super(key: key);
@@ -32,12 +35,7 @@ class _IconSwiperUpState extends State<IconSwiperUp> with SingleTickerProviderSt
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
     if (details.primaryDelta > -12) {
-      showCupertinoModalPopup(
-        context: context,
-        builder: (_) => Container(
-          color: Colors.red.withOpacity(.2),
-        ),
-      );
+      showCupertinoModalPopup(context: context, builder: (_) => Forecast());
     }
   }
 
