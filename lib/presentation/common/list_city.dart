@@ -7,7 +7,7 @@ class ListCity extends StatelessWidget {
     @required this.cities,
     this.isHistory = false,
     @required this.onTap,
-    this.textEmpty = 'No se encontraron ciudades',
+    this.textEmpty = 'No cities found',
   }) : super(key: key);
   final List<City> cities;
   final bool isHistory;

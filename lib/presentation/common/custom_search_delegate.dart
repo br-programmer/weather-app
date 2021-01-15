@@ -50,8 +50,8 @@ class CustomSearchDelegate extends SearchDelegate<City> {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
     final myList = bloc.myCities.value.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
     final textEmpty = bloc.myCities.value.isEmpty
-        ? 'No tienes ciudades en tu historial'
-        : 'Ninguna ciudad de tu historial coincide con tu busqueda';
+        ? 'You have no cities in your history'
+        : 'No city in your history matches your search';
     return ListCity(cities: myList, isHistory: true, onTap: (city) => close(context, city), textEmpty: textEmpty);
   }
 }
