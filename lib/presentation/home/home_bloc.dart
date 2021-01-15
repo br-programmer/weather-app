@@ -62,10 +62,24 @@ class HomeBLoC extends ChangeNotifier {
     final data = await repository.getWeathers(WeathersRequest(city: city));
     if (data != null) {
       final tmp = List<City>.from(_myCities.value);
-      tmp.add(data.city);
+      final i = _cityExist(data.city);
+      if (_cityExist(data.city) != null) {
+        tmp[i] = data.city;
+      } else {
+        tmp.add(data.city);
+      }
       _myCities.value = tmp;
     }
     _loadingWeathers.value = false;
+  }
+
+  int _cityExist(City city) {
+    for (int i = 0; i < _myCities.value.length; i++) {
+      if (_myCities.value[i].isExist(city)) {
+        return i;
+      }
+    }
+    return null;
   }
 
   Future<void> _search(String query) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/domain/model/city.dart';
+import 'package:weather/presentation/common/list_city.dart';
 import 'package:weather/presentation/common/my_loading.dart';
 import 'package:weather/presentation/home/home_bloc.dart';
 
@@ -10,9 +11,7 @@ class CustomSearchDelegate extends SearchDelegate<City> {
     return [
       IconButton(
         icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
+        onPressed: () => query = '',
       ),
     ];
   }
@@ -26,9 +25,7 @@ class CustomSearchDelegate extends SearchDelegate<City> {
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
+      onPressed: () => close(context, null),
     );
   }
 
@@ -43,23 +40,7 @@ class CustomSearchDelegate extends SearchDelegate<City> {
         if (bloc.loadingCity.value) {
           return child;
         }
-        return ListView.builder(
-          itemCount: bloc.searchCities.value.length,
-          itemBuilder: (_, int index) {
-            final city = bloc.searchCities.value[index];
-            return ListTile(
-              title: Text(
-                '${city.title}',
-                style: Theme.of(context).textTheme.subtitle2.copyWith(color: Colors.black),
-              ),
-              subtitle: Text(
-                '${city.type}',
-                style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black54),
-              ),
-              onTap: () => close(context, city),
-            );
-          },
-        );
+        return ListCity(cities: bloc.searchCities.value, onTap: (city) => close(context, city));
       },
     );
   }
@@ -68,21 +49,9 @@ class CustomSearchDelegate extends SearchDelegate<City> {
   Widget buildSuggestions(BuildContext context) {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
     final myList = bloc.myCities.value.where((item) => item.title.toLowerCase().contains(query.toLowerCase())).toList();
-    return ListView.builder(
-      itemCount: myList.length,
-      itemBuilder: (_, int index) {
-        return ListTile(
-          title: Text(
-            '${bloc.myCities.value[index].title}',
-            style: Theme.of(context).textTheme.subtitle2.copyWith(color: Colors.black),
-          ),
-          subtitle: Text(
-            '${bloc.myCities.value[index].type}',
-            style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.black54),
-          ),
-          leading: Icon(Icons.history),
-        );
-      },
-    );
+    final textEmpty = bloc.myCities.value.isEmpty
+        ? 'No tienes ciudades en tu historial'
+        : 'Ninguna ciudad de tu historial coincide con tu busqueda';
+    return ListCity(cities: myList, isHistory: true, onTap: (city) => close(context, city), textEmpty: textEmpty);
   }
 }

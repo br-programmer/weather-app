@@ -51,16 +51,19 @@ class _BackgroundState extends State<Background> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 6), lowerBound: 0.0, upperBound: 0.5)
-          ..reverse(from: 0.5)
-          ..repeat(reverse: true);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 6),
+      lowerBound: 0.0,
+      upperBound: 0.5,
+    )
+      ..reverse(from: 0.5)
+      ..repeat(reverse: true);
   }
 
   @override
   void dispose() {
     _controller?.dispose();
-    print('dispose home-empty');
     super.dispose();
   }
 

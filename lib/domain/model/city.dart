@@ -23,4 +23,6 @@ class City {
         type: type,
         weathers: weathers,
       );
+
+  bool isExist(City city) => city.id == id;
 }
