@@ -35,7 +35,8 @@ class _WeatherStateBackgroundState extends State<WeatherStateBackground> with Si
       animation: Listenable.merge([_controller, bloc.currentPage]),
       builder: (_, __) {
         final weather = bloc.myCities.value[bloc.currentPage.value].weathers.first;
-        return Positioned.fill(
+        return Positioned(
+          height: MediaQuery.of(context).size.height,
           left: _movement * _controller.value,
           right: _movement * (1 - _controller.value),
           child: AnimatedSwitcher(

@@ -72,10 +72,9 @@ class _ItemForecast extends StatelessWidget {
                     height: 25,
                   ),
                 ),
-                const Spacer(),
-                Text('⬇${weather.minTemp.toInt()}°C', style: myStyle),
-                Text(' - ', style: myStyle),
-                Text('⬆${weather.maxTemp.toInt()}°C', style: myStyle),
+                Expanded(
+                    child: Text('${weather.minTemp.toInt()}°C - ${weather.maxTemp.toInt()}°C',
+                        style: myStyle, textAlign: TextAlign.end)),
               ],
             ),
             const SizedBox(height: 10),

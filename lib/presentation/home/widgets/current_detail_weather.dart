@@ -68,8 +68,8 @@ class _DetailtWeather extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _ItemDetailtWeather(title: 'Temp Min', value: weather.minTemp.toStringAsFixed(2)),
-                _ItemDetailtWeather(title: 'Temp Max', value: weather.maxTemp.toStringAsFixed(2)),
+                _ItemDetailtWeather(title: 'Temp Min', value: '${weather.minTemp.toStringAsFixed(2)} °C'),
+                _ItemDetailtWeather(title: 'Temp Max', value: '${weather.maxTemp.toStringAsFixed(2)} °C'),
               ],
             ),
           ],
