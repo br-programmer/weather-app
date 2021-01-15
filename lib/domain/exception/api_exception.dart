@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart' show required;
 
-class ApiException {
+class ApiException implements Exception {
   final String text;
   final int code;
 
