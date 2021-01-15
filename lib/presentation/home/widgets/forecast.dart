@@ -21,12 +21,12 @@ class Forecast extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
-              child: Text(
-                '3 day forecast',
-                style: Theme.of(context).textTheme.headline5.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(vertical: 25),
+                child: Text('3 day forecast',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        .copyWith(color: Colors.black, fontWeight: FontWeight.bold))),
             Expanded(
               child: ValueListenableBuilder<int>(
                 valueListenable: bloc.currentPage,
