@@ -17,7 +17,7 @@ class _WeatherStateBackgroundState extends State<WeatherStateBackground> with Si
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
     super.initState();
   }
@@ -31,24 +31,27 @@ class _WeatherStateBackgroundState extends State<WeatherStateBackground> with Si
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<HomeBLoC>(context, listen: false);
-    return AnimatedBuilder(
-      animation: Listenable.merge([_controller, bloc.currentPage]),
-      builder: (_, __) {
-        final weather = bloc.myCities.value[bloc.currentPage.value].weathers.first;
-        return Positioned(
-          height: MediaQuery.of(context).size.height,
-          left: _movement * _controller.value,
-          right: _movement * (1 - _controller.value),
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 600),
-            child: Image.asset(
-              'assets/weather_state/${weather.weatherStateAbbr}.jpg',
-              key: ValueKey(weather.weatherStateAbbr),
-              fit: BoxFit.cover,
+    return Positioned(
+      height: MediaQuery.of(context).size.height,
+      left: _movement,
+      right: _movement,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_controller, bloc.currentPage]),
+        builder: (_, __) {
+          final weather = bloc.myCities.value[bloc.currentPage.value].weathers.first;
+          return Transform.translate(
+            offset: Offset(_controller.value * 7.5, 0),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
+              child: Image.asset(
+                'assets/weather_state/${weather.weatherStateAbbr}.jpg',
+                key: ValueKey(weather.weatherStateAbbr),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

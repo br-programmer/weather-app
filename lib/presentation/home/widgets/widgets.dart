@@ -4,3 +4,6 @@ export 'package:weather/presentation/home/widgets/page_indicator.dart';
 export 'package:weather/presentation/home/widgets/page_view_cities.dart';
 export 'package:weather/presentation/home/widgets/copy_right_data.dart';
 export 'package:weather/presentation/home/widgets/weather_state_background.dart';
+export 'package:weather/presentation/home/widgets/home_weathers.dart';
+export 'package:weather/presentation/home/widgets/current_detail_weather.dart';
+export 'package:weather/presentation/home/widgets/current_temperature.dart';

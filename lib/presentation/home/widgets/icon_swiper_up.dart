@@ -34,7 +34,7 @@ class _IconSwiperUpState extends State<IconSwiperUp> with SingleTickerProviderSt
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
-    if (details.primaryDelta > -12) {
+    if (details.delta.dy > -50) {
       showCupertinoModalPopup(context: context, builder: (_) => Forecast());
     }
   }

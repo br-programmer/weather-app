@@ -73,7 +73,7 @@ class _ItemForecast extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                    child: Text('${weather.minTemp.toInt()}°C - ${weather.maxTemp.toInt()}°C',
+                    child: Text('Min ${weather.minTemp.toInt()}°C  Max ${weather.maxTemp.toInt()}°C',
                         style: myStyle, textAlign: TextAlign.end)),
               ],
             ),
