@@ -19,13 +19,9 @@ jobs:
     
     - run: flutter pub get
     - run: flutter build apk --release
-    - run: flutter build apk --release --split-per-abi
-    - run: flutter build appbundle
-    - name: Create a Release in GitHub
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab"
-        token: ${{ secrets.GH_TOKEN }}
-        tag: '0.0.1'
-        commit: 'build release android'
-        prerelease: true
+
+    - name: Create a Artifact
+      - uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
